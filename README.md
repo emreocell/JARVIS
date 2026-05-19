@@ -131,7 +131,7 @@ run.bat
 
 ```powershell
 git clone https://github.com/emreocell/JARVIS
-cd jarvis
+cd JARVIS
 
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
