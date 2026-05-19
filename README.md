@@ -30,7 +30,6 @@ Windows için geliştirilmiş, sesli komutlarla çalışan kişisel AI asistanı
 - [Skill Sistemi](#skill-sistemi)
 - [Proje Yapısı](#proje-yapısı)
 - [Test](#test)
-- [Güvenlik](#güvenlik)
 - [Geliştirici](#geliştirici)
 
 ## Demo
@@ -269,15 +268,6 @@ Son yerel kontrolde:
 ```text
 429 passed, 1 skipped
 ```
-
-## Güvenlik
-
-- Gerçek API key'leri repoya koymayın.
-- `config/api_keys.json` kişisel dosyadır.
-- `logs/` ve konuşma geçmişi kişisel veri içerebilir.
-- `memory/*.json` dosyaları kullanıcı tercihleri, pano geçmişi veya kişisel not içerebilir.
-- Public paylaşım öncesi key rotate etmek iyi pratiktir.
-- Privacy Mode açıkken konuşma logları, pano tüketimi ve bazı kalıcı yazımlar durdurulur.
 
 ## Geliştirici
 
