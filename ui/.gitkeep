@@ -1,0 +1,5 @@
+# Reserved for ui package migration.
+# Currently the legacy `ui.py` module is still in use; once it is split into
+# hud.py, theme.py, task_dock.py, toast.py, palette.py, waveform.py and
+# sparkline.py (per design.md "Modül Yerleşimi"), `__init__.py` will replace
+# this placeholder.

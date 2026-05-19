@@ -1,0 +1,62 @@
+[
+  {
+    "name": "günaydın",
+    "triggers": ["günaydın", "gunaydin", "sabah"],
+    "steps": [
+      {
+        "tool": "get_weather",
+        "args": {},
+        "on_error": "continue",
+        "name": "Hava durumunu al"
+      },
+      {
+        "tool": "get_calendar_events",
+        "args": {},
+        "on_error": "continue",
+        "name": "Takvim etkinliklerini al"
+      },
+      {
+        "tool": "get_reminders",
+        "args": {},
+        "on_error": "continue",
+        "name": "Hatırlatıcıları al"
+      }
+    ]
+  },
+  {
+    "name": "iş başla",
+    "triggers": ["iş başla", "is basla", "çalışmaya başla"],
+    "steps": [
+      {
+        "tool": "browser_control",
+        "args": {"action": "search", "query": "gündem haberleri"},
+        "on_error": "continue",
+        "name": "Tarayıcıda arama yap"
+      },
+      {
+        "tool": "play_media",
+        "args": {"query": "çalışma müziği", "source": "youtube"},
+        "on_error": "continue",
+        "name": "Müzik çal"
+      }
+    ]
+  },
+  {
+    "name": "kapat",
+    "triggers": ["kapat", "kapat jarvis", "günü kapat", "gunu kapat"],
+    "steps": [
+      {
+        "tool": "sys_info",
+        "args": {"query": "özet"},
+        "on_error": "continue",
+        "name": "Sistem özeti al"
+      },
+      {
+        "tool": "open_app",
+        "args": {"action": "close_all"},
+        "on_error": "continue",
+        "name": "Uygulamaları kapat"
+      }
+    ]
+  }
+]

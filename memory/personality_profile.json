@@ -1,0 +1,26 @@
+﻿{
+  "schema_version": 1,
+  "tone": {
+    "warmth": 0.7,
+    "brevity": 0.6,
+    "proactivity": 0.7,
+    "technical_depth": 0.8,
+    "playfulness": 0.4
+  },
+  "relationship": {
+    "preferred_address": "",
+    "working_style": "collaborative",
+    "language": "tr"
+  },
+  "emotional_state": {
+    "current": "steady",
+    "intensity": 0,
+    "last_signal": "",
+    "updated_at": null
+  },
+  "preferences": {},
+  "interaction_stats": {
+    "turns_observed": 0,
+    "last_user_message_at": null
+  }
+}

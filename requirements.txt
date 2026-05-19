@@ -1,0 +1,48 @@
+# JARVIS Windows — Gerekli paketler
+# v2 yükseltmesi — tüm bağımlılıklar gruplanmış.
+
+# --- Ses / Voice_Core ---
+google-genai>=0.8.0
+SpeechRecognition>=3.10.0
+pyaudio>=0.2.14
+pyttsx3>=2.90
+
+# --- Görüntü / Vision ---
+Pillow>=10.0.0
+mss>=9.0.0
+opencv-python>=4.8.0
+numpy>=1.26.0
+
+# --- HTTP / API ---
+requests>=2.31.0
+playwright>=1.45.0
+
+# --- Sistem entegrasyonu (Windows) ---
+psutil>=5.9.0
+pywin32>=306
+pygame>=2.5.0
+pyperclip>=1.8.2
+pyautogui>=0.9.54
+
+# --- v2: UI Automation ve Tray ---
+uiautomation>=2.0.18
+infi.systray>=0.1.12
+keyboard>=0.13.5
+
+# --- v2: Wake-word ---
+openwakeword>=0.6.0
+
+# --- v2: Document_QA ---
+pypdf>=4.0.0
+python-docx>=1.1.0
+
+# --- v2: GPU telemetri ---
+pynvml>=11.5.0
+
+# --- v2: Skill manifesto (YAML) ---
+pyyaml>=6.0.1
+
+# --- v2: Test çatısı ---
+pytest>=7.4.0
+hypothesis>=6.100.0
+freezegun>=1.4.0

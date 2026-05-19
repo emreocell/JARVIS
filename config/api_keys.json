@@ -1,0 +1,174 @@
+﻿{
+    "schema_version":  3,
+    "gemini_api_key":  "",
+    "nvidia_api_key":  "",
+    "voice":  "Kore",
+    "youtube_api_key":  "",
+    "youtube_channel_handle":  "",
+    "theme":  "Teal Core",
+    "wake_word_enabled":  false,
+    "privacy_mode_default":  false,
+    "disabled_skills":  {
+
+                        },
+    "hotkeys":  {
+                    "command_palette":  "ctrl+shift+space"
+                },
+    "tray_minimize_on_close":  true,
+    "start_with_windows":  false,
+    "last_window_geometry":  "",
+    "last_monitor_index":  0,
+    "voice_control":  {
+                          "barge_in_enabled":  true,
+                          "mute_mic_while_speaking":  true,
+                          "stop_only_barge_in":  true,
+                          "post_speech_input_cooldown_ms":  1600,
+                          "wake_word_resumes_pause":  true,
+                          "classify_interrupts_with_groq":  true
+                      },
+    "system_language":  "tr-TR",
+    "transcription_language_codes":  [
+                                         "tr-TR",
+                                         "en-US"
+                                     ],
+    "user_rules":  "",
+    "preferred_browser":  "chrome",
+    "gemini_secondary_api_key":  "",
+    "groq_api_key":  "",
+    "openrouter_api_key":  "",
+    "google_vision_api_key":  "",
+    "model_router":  {
+                         "default_routes":  {
+                                                "low_latency.intent":  {
+                                                                           "provider":  "groq",
+                                                                           "model":  "llama-3.1-8b-instant"
+                                                                       },
+                                                "self_eval.quick":  {
+                                                                        "provider":  "groq",
+                                                                        "model":  "llama-3.1-8b-instant"
+                                                                    },
+                                                "openrouter.fast":  {
+                                                                        "provider":  "openrouter",
+                                                                        "model":  "openai/gpt-oss-20b:free"
+                                                                    },
+                                                "openrouter.balanced":  {
+                                                                            "provider":  "openrouter",
+                                                                            "model":  "meta-llama/llama-3.3-70b-instruct:free"
+                                                                        },
+                                                "openrouter.coder":  {
+                                                                         "provider":  "openrouter",
+                                                                         "model":  "qwen/qwen3-coder:free"
+                                                                     },
+                                                "memory_rag.query":  {
+                                                                         "provider":  "nvidia",
+                                                                         "model":  "nvidia/llama3-chatqa-1.5-70b"
+                                                                     },
+                                                "memory_rag.embed":  {
+                                                                         "provider":  "nvidia",
+                                                                         "model":  "nvidia/nv-embedqa-e5-v5"
+                                                                     },
+                                                "doc_intel.parse":  {
+                                                                        "provider":  "nvidia",
+                                                                        "model":  "nvidia/nemotron-parse"
+                                                                    },
+                                                "doc_intel.chart":  {
+                                                                        "provider":  "nvidia",
+                                                                        "model":  "google/deplot"
+                                                                    },
+                                                "reasoning.plan":  {
+                                                                       "provider":  "openrouter",
+                                                                       "model":  "qwen/qwen3-coder:free"
+                                                                   },
+                                                "translate.text":  {
+                                                                       "provider":  "nvidia",
+                                                                       "model":  "nvidia/riva-translate-4b-instruct-v1.1"
+                                                                   },
+                                                "creative.write":  {
+                                                                       "provider":  "nvidia",
+                                                                       "model":  "writer/palmyra-creative-122b"
+                                                                   },
+                                                "image_search.embed":  {
+                                                                           "provider":  "nvidia",
+                                                                           "model":  "nvidia/nvclip"
+                                                                       },
+                                                "embodied.next_action":  {
+                                                                             "provider":  "nvidia",
+                                                                             "model":  "nvidia/cosmos-reason2-8b"
+                                                                         },
+                                                "voice_core.intent":  {
+                                                                          "provider":  "gemini_primary",
+                                                                          "model":  "models/gemini-3.1-flash-lite"
+                                                                      },
+                                                "voice_core.heavy":  {
+                                                                         "provider":  "gemini_primary",
+                                                                         "model":  "models/gemini-2.5-flash"
+                                                                     }
+                                            },
+                         "fallback_chain":  {
+                                                "gemini_primary":  "gemini_secondary",
+                                                "gemini_secondary":  "gemini_primary",
+                                                "groq":  [
+                                                             "openrouter",
+                                                             "gemini_primary"
+                                                         ],
+                                                "openrouter":  [
+                                                                   "groq",
+                                                                   "gemini_primary"
+                                                               ],
+                                                "nvidia":  [
+                                                               "openrouter",
+                                                               "gemini_primary"
+                                                           ],
+                                                "gemini_extra_1":  "gemini_primary",
+                                                "gemini_extra_2":  "gemini_primary",
+                                                "gemini_extra_3":  "gemini_primary"
+                                            },
+                         "health_check_interval_sec":  60,
+                         "disable_cache":  false,
+                         "gemini_chat_model":  "models/gemini-3.1-flash-lite",
+                         "gemini_task_models":  [
+                                                    "models/gemini-2.5-flash",
+                                                    "models/gemini-3.1-flash-lite",
+                                                    "models/gemini-2.5-flash-lite"
+                                                ],
+                         "gemini_pool_providers":  [
+                                                       "gemini_primary",
+                                                       "gemini_secondary",
+                                                       "gemini_extra_1",
+                                                       "gemini_extra_2",
+                                                       "gemini_extra_3"
+                                                   ]
+                     },
+    "safety":  {
+                   "enforce_content_safety":  true,
+                   "fail_closed":  false,
+                   "allowed_topics":  {
+
+                                      }
+               },
+    "memory_rag":  {
+                       "top_k":  5,
+                       "chunk_chars":  800,
+                       "chunk_overlap":  100,
+                       "embed_batch":  16
+                   },
+    "translate":  {
+                      "default_target":  "en"
+                  },
+    "image_search":  {
+                         "embed_batch":  8
+                     },
+    "browser_automation":  {
+                               "engine":  "playwright",
+                               "preferred_channel":  "chrome",
+                               "allow_chromium_fallback":  true,
+                               "profile_dir":  "runtime/browser_profile",
+                               "headless":  false,
+                               "slow_mo_ms":  30
+                           },
+    "gemini_extra_api_keys":  [
+                                  "",
+                                  "",
+                                  ""
+                              ]
+}
