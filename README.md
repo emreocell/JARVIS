@@ -130,7 +130,7 @@ run.bat
 ### Manuel Kurulum
 
 ```powershell
-git clone <https://github.com/emreocell/JARVIS>
+git clone https://github.com/emreocell/JARVIS
 cd jarvis
 
 python -m venv .venv
