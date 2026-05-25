@@ -19,29 +19,32 @@ def test_load_memory_returns_empty_dict_when_file_missing(monkeypatch, tmp_path:
     assert memory_manager.load_memory() == {}
 
 
-def test_load_memory_returns_empty_dict_and_logs_when_json_is_corrupt(
-    monkeypatch,
-    tmp_path: Path,
-    caplog,
-):
+def test_load_memory_quarantines_corrupt_json(monkeypatch, tmp_path: Path, caplog):
     memory_file = _set_memory_file(monkeypatch, tmp_path)
     memory_file.write_text("{not-valid-json", encoding="utf-8")
 
     with caplog.at_level(logging.WARNING):
         result = memory_manager.load_memory()
 
+    quarantined = list(tmp_path.glob("memory.json.corrupt-*"))
     assert result == {}
+    assert not memory_file.exists()
+    assert len(quarantined) == 1
     assert "Bellek JSON dosyasi bozuk" in caplog.text
+    assert quarantined[0].read_text(encoding="utf-8") == "{not-valid-json"
 
 
-def test_load_memory_rejects_non_dict_payload(monkeypatch, tmp_path: Path, caplog):
+def test_load_memory_quarantines_non_dict_payload(monkeypatch, tmp_path: Path, caplog):
     memory_file = _set_memory_file(monkeypatch, tmp_path)
     memory_file.write_text(json.dumps(["not", "a", "dict"]), encoding="utf-8")
 
     with caplog.at_level(logging.WARNING):
         result = memory_manager.load_memory()
 
+    quarantined = list(tmp_path.glob("memory.json.corrupt-*"))
     assert result == {}
+    assert not memory_file.exists()
+    assert len(quarantined) == 1
     assert "dict yerine list iceriyor" in caplog.text
 
 
