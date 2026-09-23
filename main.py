@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
 JARVIS Windows — Gercek zamanli sesli yardimci cekirdegi
-Alp Ünlü tarafından yapılmıştır — @alppunlu
 Windows ortamina uyarlanmis calisma akisi
 """
 
