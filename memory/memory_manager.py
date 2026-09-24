@@ -5,22 +5,69 @@ Alp Ünlü tarafından yapılmıştır — @alppunlu
 
 import datetime
 import json
+import logging
 import re
+import time
 import unicodedata
 from pathlib import Path
 
-BASE_DIR    = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 MEMORY_FILE = BASE_DIR / "memory" / "memory.json"
+LOGGER = logging.getLogger(__name__)
+
+
+def _ts_suffix() -> str:
+    return time.strftime("%Y%m%d-%H%M%S", time.localtime())
+
+
+def _quarantine_invalid_memory_file() -> Path | None:
+    if not MEMORY_FILE.exists():
+        return None
+
+    target = MEMORY_FILE.with_name(f"{MEMORY_FILE.name}.corrupt-{_ts_suffix()}")
+    counter = 1
+    while target.exists():
+        target = MEMORY_FILE.with_name(
+            f"{MEMORY_FILE.name}.corrupt-{_ts_suffix()}-{counter}"
+        )
+        counter += 1
+
+    try:
+        MEMORY_FILE.rename(target)
+    except OSError as exc:
+        LOGGER.warning("Bozuk bellek dosyasi karantinaya alinamadi: %s", exc)
+        return None
+    return target
 
 
 def load_memory() -> dict:
+    if not MEMORY_FILE.exists():
+        return {}
+
     try:
-        if MEMORY_FILE.exists():
-            with open(MEMORY_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
-    except Exception:
-        pass
-    return {}
+        with open(MEMORY_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except json.JSONDecodeError as exc:
+        quarantined = _quarantine_invalid_memory_file()
+        LOGGER.warning(
+            "Bellek JSON dosyasi bozuk: %s%s",
+            exc,
+            f" | karantina={quarantined.name}" if quarantined else "",
+        )
+        return {}
+    except OSError as exc:
+        LOGGER.warning("Bellek dosyasi okunamadi: %s", exc)
+        return {}
+
+    if not isinstance(data, dict):
+        quarantined = _quarantine_invalid_memory_file()
+        LOGGER.warning(
+            "Bellek dosyasi dict yerine %s iceriyor.%s",
+            type(data).__name__,
+            f" karantina={quarantined.name}" if quarantined else "",
+        )
+        return {}
+    return data
 
 
 def update_memory(data: dict):
@@ -122,7 +169,6 @@ def delete_memory(category: str = "", key: str = "", match_text: str = "") -> st
                 _write_memory(mem)
                 return f"{cat} hafizadan kaldirildi."
             continue
-
         for item_key, item_value in list(bucket.items()):
             if _entry_matches(needle, cat, item_key, item_value):
                 del bucket[item_key]
@@ -137,6 +183,7 @@ def delete_memory(category: str = "", key: str = "", match_text: str = "") -> st
 def format_memory_for_prompt(memory: dict) -> str:
     if not memory:
         return ""
+
     lines = ["[KULLANICI HAKKINDA BİLGİLER]"]
     for category, items in memory.items():
         # observations bucket'ı yalnızca dahili sayaç tutar; prompt'a dahil
@@ -164,8 +211,6 @@ def format_memory_for_prompt(memory: dict) -> str:
 # ---------------------------------------------------------------------------
 # Pasif gözlem -> ilgi alanı çıkarımı
 # ---------------------------------------------------------------------------
-
-
 _DEFAULT_OBSERVATION_THRESHOLD = 3
 _MAX_OBSERVATION_CATEGORIES = 32
 
@@ -198,7 +243,6 @@ def record_observation(
         return (0, False)
 
     mem = load_memory()
-
     obs = mem.get("observations")
     if not isinstance(obs, dict):
         obs = {}
